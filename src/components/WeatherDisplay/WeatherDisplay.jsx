@@ -1,36 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './WeatherDisplay.css';
+import cloudy from '../../assets/cloudy.png';
+import partly_cloudy from '../../assets/partly-cloudy.png';
+import sun from '../../assets/sun.png';
 
 export default function WeatherDisplay({ location }) {
-  if (!location) return null;
+  const [cloudIcon, setCloudIcon] = useState(sun);
+
+  useEffect(() => {
+    if (location.clouds.all >= 70) {
+      setCloudIcon(cloudy);
+    } else if (location.clouds.all > 10 && location.clouds.all < 70) {
+      setCloudIcon(partly_cloudy);
+    } else {
+      setCloudIcon(sun);
+    }
+  }, [location.clouds.all]);
+
   const {
     name,
     clouds: { all },
-    main: {
-      feels_like,
-      grnd_level,
-      humidity,
-      pressure,
-      temp,
-      temp_max,
-      temp_min
-    },
+    main: { feels_like, humidity, pressure, temp, temp_max, temp_min },
     sys: { country },
     visibility,
     wind: { speed }
   } = location;
+
+  console.log(location);
 
   return (
     <div className="weather-container">
       <div className="weather-header">
         <div className="location-name">
           <h1>
-            {name} {country}
+            {name}, {country}
           </h1>
         </div>
         <div className="temperature">
-          <div className="temp">Temperature: {temp}</div>
-          <div className="feels-like">Fells Like: {feels_like}</div>
+          <div className="temp">
+            <p>Temperature:</p> {temp}
+          </div>
+          <div className="temp">
+            <p>Fells Like:</p> {feels_like}
+          </div>
         </div>
       </div>
 
@@ -38,13 +50,10 @@ export default function WeatherDisplay({ location }) {
         <div className="row">
           <div className="clouds el-block">
             <h4>Clouds: </h4>
-            {all}
+            <img src={cloudIcon} alt="clouds" />
+            {all}%
           </div>
 
-          <div className="ground-level el-block">
-            <h4>Ground level:</h4>
-            {grnd_level}
-          </div>
           <div className="humidity el-block">
             <h4>Humidity:</h4>
             {humidity}%

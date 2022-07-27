@@ -1,7 +1,6 @@
 .App {
   height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   position: relative;
@@ -12,8 +11,7 @@
 }
 
 .forecast-form-container {
-  position: absolute;
-  top: 60px;
+  margin-bottom: 25px;
 }
 
 .forecast-input {
@@ -27,9 +25,15 @@
   font-size: 22px;
   font-family: Tahoma;
   padding: 0 12px;
-  box-shadow: 0px 0px 16px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 16px 1px rgba(0, 0, 0, 0.1);
 }
 
 .forecast-input::placeholder {
   color: #cccccc;
+}
+
+.forecast-header {
+  color: #cccccc;
+  display: flex;
+  justify-content: center;
 }

@@ -1,6 +1,7 @@
 .weather-container {
     display: flex;
     flex-direction: column;
+    min-width: 90%;
 }
 
 .weather-header {
@@ -8,7 +9,9 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    min-height: 180px;
+    box-shadow: 0px 7px 16px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 45px;
+    padding: 15px;
 }
 
 .el-block {
@@ -32,6 +35,10 @@
     cursor: pointer;
 }
 
+.el-block:active {
+    transform: scale(3);
+}
+
 .el-block:not(:hover) {
     transition-duration: 150ms;
 }
@@ -44,8 +51,6 @@
 
 .temperature {
     display: flex;
-    flex-direction: column;
-    height: 100%;
 }
 
 .location-name {
@@ -53,4 +58,36 @@
     background: lightgray;
     color: white;
     border-radius: 35px;
+}
+
+.temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: lightgrey;
+    width: 150px;
+    margin: 10px;
+    border-radius: 26px;
+    color: white;
+    padding: 13px 0px;
+    box-shadow: inset 0px 0px 17px 11px rgba(255, 255, 255, 0.57);
+}
+
+.temp:hover {
+    transform: scale(1.15);
+    transition-duration: 300ms;
+    background: rgb(90, 90, 90);
+    cursor: pointer;
+}
+
+.temp:not(:hover) {
+    transition-duration: 150ms;
+}
+
+.temp:active {
+    transform: scale(3);
+}
+
+.temp p {
+    margin: 5px auto;
 }

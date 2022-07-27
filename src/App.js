@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import { useCallback, useState } from 'react';
 import './App.css';
+import axios from './axios';
+import WeatherDisplay from './components/WeatherDisplay/WeatherDisplay';
+import { debounce } from './utils';
 
 function App() {
+  const [locationWeather, setLocationWeather] = useState();
+
+  const getWeather = useCallback(async (e) => {
+    const cityName = e.target.value;
+    const limit = 1;
+
+    try {
+      const location = await axios.get(
+        `/geo/1.0/direct?q=${cityName}&limit=${limit}`
+      );
+
+      const weather = await axios.get(
+        `/data/2.5/weather?lat=${location.data[0].lat}&lon=${location.data[0].lon}`
+      );
+      setLocationWeather(weather.data);
+    } catch (error) {
+      console.error("didn't get weather", error);
+    }
+  }, []);
+
+  const handleWeather = useCallback(
+    () => debounce(getWeather, 500),
+    [getWeather]
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="forecast-form-container">
+        <form className="forecast-form" onChange={handleWeather()}>
+          <input
+            type="text"
+            className="forecast-input"
+            placeholder="Enter location"
+          />
+        </form>
+      </div>
+      <div className="forecast-container">
+        <WeatherDisplay location={locationWeather} />
+      </div>
     </div>
   );
 }

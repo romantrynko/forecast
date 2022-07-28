@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './WeatherDisplay.css';
-import cloudy from '../../assets/cloudy.png';
-import partly_cloudy from '../../assets/partly-cloudy.png';
-import sun from '../../assets/sun.png';
+import cloudy_icon from '../../assets/cloudy.png';
+import partly_cloudy_con from '../../assets/partly-cloudy.png';
+import sun_icon from '../../assets/sun.png';
+import wind_icon from '../../assets/wind.png';
+import temperature_icon from '../../assets/thermometer.png';
+import pressure_icon from '../../assets/pressure.png';
 
 export default function WeatherDisplay({ location }) {
-  const [cloudIcon, setCloudIcon] = useState(sun);
+  const [cloudIcon, setCloudIcon] = useState();
 
   useEffect(() => {
     if (location.clouds.all >= 70) {
-      setCloudIcon(cloudy);
+      setCloudIcon(cloudy_icon);
     } else if (location.clouds.all > 10 && location.clouds.all < 70) {
-      setCloudIcon(partly_cloudy);
+      setCloudIcon(partly_cloudy_con);
     } else {
-      setCloudIcon(sun);
+      setCloudIcon(sun_icon);
     }
   }, [location.clouds.all]);
 
@@ -38,10 +41,12 @@ export default function WeatherDisplay({ location }) {
         </div>
         <div className="temperature">
           <div className="temp">
-            <p>Temperature:</p> {temp}
+            <p>Temperature</p>
+            {temp} &#8451;
           </div>
           <div className="temp">
-            <p>Fells Like:</p> {feels_like}
+            <p>Feels Like</p>
+            {feels_like} &#8451;
           </div>
         </div>
       </div>
@@ -49,35 +54,39 @@ export default function WeatherDisplay({ location }) {
       <div className="weather-body">
         <div className="row">
           <div className="clouds el-block">
-            <h4>Clouds: </h4>
             <img src={cloudIcon} alt="clouds" />
-            {all}%
+            {all} %
           </div>
 
           <div className="humidity el-block">
-            <h4>Humidity:</h4>
-            {humidity}%
+            <h4>Humidity</h4>
+            {humidity} %
           </div>
         </div>
 
         <div className="row">
           <div className="pressure el-block">
-            <h4>Pressure: </h4>
-            {pressure}
+            <img src={pressure_icon} alt="pressure" />
+            {pressure} mbar
           </div>
           <div className="temp-max el-block">
-            <h4>Max temp:</h4> {temp_max}
+            <h4>Max</h4>
+            <img src={temperature_icon} alt="temp" />
+            {temp_max} &#8451;
           </div>
           <div className="temp-min el-block">
-            <h4>Min temp:</h4> {temp_min}
+            <h4>Min</h4>
+            <img src={temperature_icon} alt="temp" />
+            {temp_min} &#8451;
           </div>
         </div>
         <div className="row">
           <div className="visibility el-block">
-            <h4>Visibility:</h4> {visibility}
+            <h4>Visibility</h4> {visibility} m
           </div>
           <div className="wind-speed el-block">
-            <h4>Wind speed:</h4> {speed}
+            <img src={wind_icon} alt="wind" />
+            {speed} m/s
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function WeatherDisplay({ location }) {
     } else {
       setCloudIcon(sun_icon);
     }
-  }, [location.clouds.all]);
+  }, [location]);
 
   const {
     name,
@@ -28,8 +28,6 @@ export default function WeatherDisplay({ location }) {
     visibility,
     wind: { speed }
   } = location;
-
-  console.log(location);
 
   return (
     <div className="weather-container">

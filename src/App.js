@@ -10,7 +10,6 @@ function App() {
 
   const getWeather = useCallback(async (e) => {
     const cityName = e.target.value;
-    const limit = 3;
 
     if (!cityName) {
       setLocationWeather();
@@ -19,22 +18,13 @@ function App() {
     }
 
     try {
-      const location = await axios.get(
-        `/geo/1.0/direct?q=${cityName}&limit=${limit}`
-      );
-      if (location.data.length === 0) {
-        setError('Wrong location');
-        setLocationWeather();
-        return;
-      }
-      const weather = await axios.get(
-        `/data/2.5/weather?lat=${location.data[0].lat}&lon=${location.data[0].lon}`
-      );
+      const weather = await axios.get(`/data/2.5/weather?q=${cityName}`);
       setLocationWeather(weather.data);
       setError('');
-      console.log(location.data);
+      console.log(weather.data);
     } catch (error) {
-      console.error("didn't get weather", error);
+      setError('Wrong location');
+      console.error('Wrong location!', error);
     }
   }, []);
 
@@ -56,9 +46,12 @@ function App() {
             placeholder="Enter location"
           />
         </form>
-        {error && <h4>{error}</h4>}
       </div>
-      {locationWeather && <WeatherDisplay location={locationWeather} />}
+      {locationWeather && !error ? (
+        <WeatherDisplay location={locationWeather} />
+      ) : (
+        <h1 className="error">{error}</h1>
+      )}
     </div>
   );
 }

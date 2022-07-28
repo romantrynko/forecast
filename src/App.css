@@ -37,3 +37,8 @@
   display: flex;
   justify-content: center;
 }
+
+.error {
+  font-weight: bold;
+  color: #a3a3a3;
+}

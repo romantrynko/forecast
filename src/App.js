@@ -18,7 +18,9 @@ function App() {
     }
 
     try {
-      const weather = await axios.get(`/data/2.5/weather?q=${cityName}`);
+      const weather = await axios.get(
+        `/data/2.5/weather?q=${cityName}&units=metric`
+      );
       setLocationWeather(weather.data);
       setError('');
       console.log(weather.data);
